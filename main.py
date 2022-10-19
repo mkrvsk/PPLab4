@@ -1,8 +1,6 @@
 from flask import Flask
 from waitress import serve
 
-app = Flask(__name__)
-
 
 @app.route("/")
 def index():
@@ -15,4 +13,5 @@ def HelloWorld():
 
 
 if __name__ == '__main__':
+    app=Flask(__name__)
     serve(app)
