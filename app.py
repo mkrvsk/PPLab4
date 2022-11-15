@@ -1,18 +1,17 @@
+import flask
 from flask import Flask
 from waitress import serve
+from check_model import *
 
-app=Flask(__name__)
-
-@app.route("/")
-def index():
-    return "<span style = 'color: red'>Wrong page</span>"
+app = Flask(__name__)
 
 
 @app.route("/api/v1/hello-world-12")
-def HelloWorld():
-    return "<h1>Hello World 12</h1>"
+def starting_endpoint():
+    return flask.Response(status=200, response="Hello World 20")
 
+test()
 
-if __name__ == '__app__':
-    
-    serve(app)
+serve(app, port='5000')
+
+# waitress-serve --port=5000 --url-scheme=http app:app

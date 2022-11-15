@@ -15,13 +15,13 @@ tags:
   description: Users functions and operations about user
 - name: moderator
   description: Moderators functions
-- name: updatedArticle
+- name: updateArticle
   description: Operations about versions of article
 paths:  
   /updateArticle/{ArticleId}/{UserId}/{EditedBody}:
     post:
       tags:
-      - updatedArticle
+      - updateArticle
       summary: Edit created article
       operationId: EditArticle
       parameters:
@@ -57,7 +57,7 @@ paths:
   /updateArticle/{ArticleId}:
     get:
       tags:
-      - updatedArticle
+      - updateArticle
       summary: Get versions of article
       parameters:
       - name: ArticleId
@@ -71,12 +71,12 @@ paths:
         200:
           description: successful operation
           content:
-              applicationUpdatedArticle/xml:
-                schema:
-                  $ref: '#/components/schemas/UpdatedArticle'
-              applicationUpdatedArticle/json:
-                schema:
-                  $ref: '#/components/schemas/UpdatedArticle'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Article'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Article'
         404:
           description: Entered ID does not exist 
       security:
@@ -84,7 +84,7 @@ paths:
   /updateArticle/{ModeratorKey}/{ArticleId}/{ArticleVersion}:
     put:
       tags:
-      - updatedArticle
+      - updateArticle
       summary: Accept article
       parameters:
       - name: api_key
@@ -114,13 +114,13 @@ paths:
         200:
           description:  Article succeful accepted 
           content:
-            applicationsArticle/json:
+            applications/json:
               schema:
                 $ref: '#/components/schemas/Article'
             applicationUser/json:
               schema:
                 $ref: '#/components/schemas/User'
-            applicationArticle/xml:
+            application/xml:
                schema:
                 $ref: '#/components/schemas/Article'
             applicationUser/xml:
@@ -511,26 +511,6 @@ components:
         version:
           type: string
           example: 0.0.1
-    UpdatedArticle:
-      type: object
-      properties:
-        ArticleId:
-          type: integer
-          format: int64
-        UserId:
-          type: integer
-          format: int64
-        ArticleBody:
-          type: string
-        date:
-          type: string
-        state:
-          type: string
-          enum:
-            - rejected
-            - accepted
-            - under_consideration
-            - awaits_resolution
       xml:
         name: Article
   securitySchemes:
