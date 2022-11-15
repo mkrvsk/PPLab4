@@ -13,3 +13,5 @@ def starting_endpoint():
 test()
 
 serve(app, port='5000')
+
+# waitress-serve --port=5000 --url-scheme=http app:app
