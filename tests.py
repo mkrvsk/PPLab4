@@ -310,7 +310,7 @@ class TestAuth(TestCase):
                                     content_type="application/json",
                                     headers = {"Authorization": f"Basic {self.moder_creds}"})
         code = response.status_code
-        self.assertEqual(400, code)
+        self.assertEqual(401, code)
 
     def test_moderator_creation_again(self, Session):
         response = self.tester.post("/api/v1/moderator",
@@ -318,7 +318,7 @@ class TestAuth(TestCase):
                                     content_type="application/json",
                                     headers = {"Authorization": f"Basic {self.moder_creds}"})
         code = response.status_code
-        self.assertEqual(404, code)
+        self.assertEqual(401, code)
 
     # Tests update Article get
     def test_updateArticle_invDat(self, Session):
@@ -337,25 +337,25 @@ class TestAuth(TestCase):
         self.assertEqual(200, code)
 
 def delete_user():
-    file = open("C:\\Users\\krvsk\\pp_project\\clean.sql")
+    file = open("C:\\Users\\Mkrvsk\\PPLab4\clean.sql")
     clean = sqlalchemy.text(file.read())
     engine.execute(clean)
     file.close()
 
 def insert_user():
-    file = open("C:\\Users\\Mkrvsk\\pp_project\\user_insert.sql")
+    file = open("C:\\Users\\Mkrvsk\\PPLab4\\user_insert.sql")
     clean = sqlalchemy.text(file.read())
     engine.execute(clean)
     file.close()
 
 def create_article():
-    file = open("C:\\Users\\Mkrvsk\\pp_project\\create_article.sql")
+    file = open("C:\\Users\\Mkrvsk\\PPLab4\\create_article.sql")
     clean = sqlalchemy.text(file.read())
     engine.execute(clean)
     file.close()
 
 def create_state():
-    file = open("C:\\Users\\Mkrvsk\\pp_project\\create_state.sql")
+    file = open("C:\\Users\\Mkrvsk\\PPLab4\\create_state.sql")
     clean = sqlalchemy.text(file.read())
     engine.execute(clean)
     file.close()
