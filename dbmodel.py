@@ -36,7 +36,7 @@ class Moderator(Base):
     lastname = Column(String(255))
     email = Column(String(255))
     password = Column(String(255))
-    moderatorkey = Column(String(255))
+    moderatorKey = Column(String(255))
 
 
 class Article(Base):
@@ -62,7 +62,6 @@ class UpdatedArticle(Base):
     state_id = Column(Integer, ForeignKey('state.state_id'))
     article_body = Column(String(8000))
     date = Column(Date)
-    status = Column(String(80))
     article = relationship("Article")
     user = relationship("User")
     moderator = relationship("Moderator")

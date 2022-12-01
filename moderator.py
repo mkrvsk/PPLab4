@@ -41,7 +41,7 @@ def registerModerator():
     # Hash user's password
     hashed_password = bcrypt.generate_password_hash(data['password'])
     # Create new user
-    new_moderator = Moderator(moderatorname=data['moderatorname'], firstname=data['firstname'], lastname=data['lastname'], email=data['email'], password=hashed_password, moderatorkey=data['moderatorkey'])
+    new_moderator = Moderator(moderatorname=data['moderatorname'], firstname=data['firstname'], lastname=data['lastname'], email=data['email'], password=hashed_password, moderatorKey=data['moderatorKey'])
 
     # Add new user to db
     session.add(new_moderator)
@@ -67,7 +67,7 @@ def get_updatedArticle(ArticleId):
         updatedArticle_data[i] = {'updated_article_id': db_user.updated_article_id, 'article_id': db_user.article_id,
                                   'user_id': db_user.user_id, 'moderator_id': db_user.moderator_id,
                                   'state_id': db_user.state_id, 'article_body': db_user.article_body,
-                                  'date': db_user.date, 'status': db_user.status}
+                                  'date': db_user.date}
         i += 1
     return jsonify({"updatedArticle": updatedArticle_data})
 
@@ -77,15 +77,15 @@ def get_updatedArticle(ArticleId):
 @auth.login_required
 def put_article():
     data = request.get_json()
-    #if auth.username() != session.query(Moderator).filter_by(moderatorkey=data['ModeratorKey']).first().moderatorname:
-    #    return Response(status=403, response='Access denied')
+    if auth.username() != session.query(Moderator).filter_by(moderatorKey=data['ModeratorKey']).first().moderatorname:
+       return Response(status=403, response='Access denied')
 
     # Check if supplied userId correct
     if data['ArticleId'] < 1:
         return Response(status=404, response='Invalid ArticleId supplied')
 
     # Check if user exists
-    db_user = session.query(Moderator).filter_by(moderatorkey=data['ModeratorKey']).first()
+    db_user = session.query(Moderator).filter_by(moderatorKey=data['ModeratorKey']).first()
     if not db_user:
         return Response(status=400, response='A bad moderator key supplied')
 
@@ -93,7 +93,7 @@ def put_article():
     if not db_user2:
         return Response(status=402, response='A bad article id was supplied')
 
-    db_user2.status = "accepted"
+    db_user2.state = "accepted"
     session.commit()
 
     return Response(status=200, response='Article was asccepted successfully')

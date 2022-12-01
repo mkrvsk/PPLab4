@@ -16,7 +16,7 @@ class ModeratorSchema(Schema):
     lastname = fields.String(required=True, validate=Length(min=3))
     email = fields.String(required=True, validate=Length(min=3))
     password = fields.String(required=True, validate=Length(min=6))
-    moderatorkey = fields.String(required=True, validate=Length(min=6))
+    moderatorKey = fields.String(required=True, validate=Length(min=6))
 
 
 class ArticleSchema(Schema):

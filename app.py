@@ -9,6 +9,7 @@ from article import article
 from updatedArticle import updatedArticle
 
 app = Flask(__name__)
+app.debug = True
 app.register_blueprint(state)
 app.register_blueprint(moderator)
 app.register_blueprint(user)

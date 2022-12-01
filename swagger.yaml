@@ -518,7 +518,7 @@ components:
         password:
           type: string
           example: somepassword
-        moderatorkey:
+        moderatorKey:
           type: string
           example: D9YH63Lk3Vx7drr
       xml:
