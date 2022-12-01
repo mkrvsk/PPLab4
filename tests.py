@@ -35,7 +35,7 @@ class TestAuth(TestCase):
             "lastname": "Gordon",
             "email": "gordon@email.com",
             "password": "suprsecretpass",
-            "moderatorkey": "789456123"
+            "moderatorKey": "789456123"
         }
         self.user = {
             "username": "user",
@@ -50,7 +50,7 @@ class TestAuth(TestCase):
             "lastname": "Price",
             "email": "moderator@email.com",
             "password": "somepassword",
-            "moderatorkey": "9876543"
+            "moderatorKey": "9876543"
         }
         self.articleData = {
             "article_id": 2,

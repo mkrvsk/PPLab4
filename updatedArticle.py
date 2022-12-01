@@ -39,7 +39,7 @@ def create_updatedArticle():
     # Check if supplied ArticleId correct
     db_user = session.query(Article).filter_by(article_id=data['article_id']).first()
     if not db_user:
-        return Response(status=404, response='A article_id with provided not ok.')
+        return Response(status=404, response='No article found.')
     # Create new article
     new_updatedArticle = UpdatedArticle(updated_article_id = data['updated_article_id'],
                                         article_id=data['article_id'],
@@ -58,7 +58,7 @@ def create_updatedArticle():
 
 # Get article by id
 @updatedArticle.route('/api/v1/updateArticle/<ArticleId>', methods=['GET'])
-# @auth.login_required
+@auth.login_required
 def get_updatedArticle(ArticleId):
     # Check if supplied ArticleId correct
     if int(ArticleId)<1:
@@ -77,27 +77,27 @@ def get_updatedArticle(ArticleId):
 
 
 # Delete article by id
-# @updatedArticle.route('/api/v1/updateArticle', methods=['PUT'])
-# @auth.login_required
-# def put_article():
-#     data = request.get_json()
-#     if auth.username() != session.query(Moderator).filter_by(moderatorkey=data['ModeratorKey']).first().moderatorname:
-#         return Response(status=406, response='Access denied')
-#
-#     # Check if supplied userId correct
-#     if data['ArticleId']<1:
-#         return Response(status=404, response='Invalid ArticleId supplied')
-#
-#     # Check if user exists
-#     db_user = session.query(Moderator).filter_by(moderatorkey=data['ModeratorKey']).first()
-#     if not db_user:
-#         return Response(status=400, response='A bad moderator key supplied')
-#
-#     db_user2 = session.query(UpdatedArticle).filter_by(updated_article_id=data['ArticleId']).first()
-#     if not db_user2:
-#         return Response(status=402, response='A bad article id was supplied')
-#
-#     db_user2.status = "accepted"
-#     session.commit()
-#
-#     return Response(status=200, response='Article was asccepted successfully')
+@updatedArticle.route('/api/v1/updateArticle', methods=['PUT'])
+@auth.login_required
+def put_article():
+    data = request.get_json()
+    if auth.username() != session.query(Moderator).filter_by(moderatorkey=data['ModeratorKey']).first().moderatorname:
+        return Response(status=406, response='Access denied')
+
+    # Check if supplied userId correct
+    if data['ArticleId']<1:
+        return Response(status=404, response='Invalid ArticleId supplied')
+
+    # Check if user exists
+    db_user = session.query(Moderator).filter_by(moderatorkey=data['ModeratorKey']).first()
+    if not db_user:
+        return Response(status=400, response='A bad moderator key supplied')
+
+    db_user2 = session.query(UpdatedArticle).filter_by(updated_article_id=data['ArticleId']).first()
+    if not db_user2:
+        return Response(status=402, response='A bad article id was supplied')
+
+    db_user2.status = "accepted"
+    session.commit()
+
+    return Response(status=200, response='Article was asccepted successfully')
